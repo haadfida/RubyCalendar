@@ -40,19 +40,15 @@ class Calendar
     updated_event.venue = updated_venue
     updated_event.name = updated_name
     updated_event.date = updated_date
-    updated_event.print_Event
-    
+    updated_event.print_Event   
     end
 
   def delete_event(date,name)
-    d=Date._parse(date)
-    
-    @config.dig(d[:year],d[:mon],d[:mday]).select { |event| event.name = name }.map { |x| x.print_Event }
-    
-    print "Enter the ID of the event you want to delete "
+    d=Date._parse(date)   
+    @config.dig(d[:year],d[:mon],d[:mday]).select { |event| event.name = name }.map { |x| x.print_Event }  
+    print 'Enter the ID of the event you want to delete '
     id=gets.chomp
     @config.dig(d[:year],d[:mon],d[:mday]).reject! { |event| event.id == id.to_i }
-
     end
 
   def print_all_month_events(year, month)
@@ -72,29 +68,27 @@ class Calendar
   end
 
   def print_month(year, month)
-
     date = Date.new(year, month, 1)
     day = date.strftime('%A')
     start = @days[day]
     days = Date.new(year, month, -1).day
     i = 0
     j = 1
-    puts("Sun\tMon\tTue\tWed\tThu\tFri\tSat")
+    puts('Sun\tMon\tTue\tWed\tThu\tFri\tSat')
     35.times do
     if i < start
       print("\t")
     elsif j >= days + 1
       break
     else
-    print(j.to_s+"\t")
-    j += 1
+      print(j.to_s+"\t")
+      j += 1
     end
     i += 1
     if i % 7 ==0
-      puts("")
+      puts('')
     end
   end
-  puts("")
+  puts('')
 end
-
 end
