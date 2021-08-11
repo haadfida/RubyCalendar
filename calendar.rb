@@ -1,12 +1,11 @@
 require 'date'
-require_relative 'Event'
-require_relative 'Calendar'
+require_relative 'event'
+require_relative 'event_list'
 
+event_list = EventList.new()
 
-calendar = Calendar.new()
-
-
-puts('Welcome to Ruby Calendar')
+while true
+puts('Welcome to Ruby event_list')
 puts('Press A- to ADD EVENT')
 puts('Press B- to DELETE EVENT')
 puts('Press C- to UPDATE EVENT')
@@ -20,14 +19,14 @@ when 'A'
   name = gets.chomp
   puts('Enter event venue')
   venue = gets.chomp
-  puts('Enter event date')
+  puts('Enter event date in format YYYY-MM-DD')
   date = gets.chomp
   if date =~ /\d{4}-\d{1,2}-\d{1,2}$/
-  puts('Enter timestamp')
-  timestamp = gets.chomp
-  event = Event.new(name, venue, date, timestamp)
-  calendar.add_event(date, event)
-  p event
+    puts('Enter timestamp')
+    timestamp = gets.chomp
+    event = Event.new(name, venue, date, timestamp)
+    event_list.add_event(date, event)
+    puts('Event inserted successfully')
   else
     puts('Incorrect Date input, YYYY-MM-DD in Numeric format')
   end
@@ -37,7 +36,7 @@ when 'B'
   if date =~ /\d{4}-\d{1,2}-\d{1,2}$/
     puts('Enter name')
     name = gets.chomp
-    calendar.update_event(date, name)
+    event_list.update_event(date, name)
     p event
   else
     puts('Incorrect Date input, YYYY-MM-DD in Numeric format')
@@ -48,7 +47,7 @@ when 'C'
   if date =~ /\d{4}-\d{1,2}-\d{1,2}$/
     puts('Enter name')
     name = gets.chomp
-    calendar.delete_event(date, name)
+    event_list.delete_event(date, name)
     p event
   else
     puts('Incorrect Date input, YYYY-MM-DD in Numeric format')
@@ -58,7 +57,7 @@ when 'D'
   year = gets.chomp
   puts('Enter month')
   month = gets.chomp
-  calendar.print_all_month_events(year,month)
+  event_list.print_all_month_events(year.to_i, month.to_i)
   
 when 'E'
   puts('Enter year')
@@ -67,22 +66,13 @@ when 'E'
   month = gets.chomp
   puts('Enter day')
   day = gets.chomp
-  calendar.print_all_day_events(year.to_i,month.to_i,day.to_i)
+  event_list.print_all_day_events(year.to_i, month.to_i, day.to_i)
 
 when 'F'
 	puts('Enter year')
   year = gets.chomp
   puts('Enter month')
   month = gets.chomp
-	calendar.print_month(year.to_i,month.to_i)
+	event_list.print_month(year.to_i, month.to_i)
 end
-
-#calendar.add_event("2013/11/2",event1)
-
-#calendar.update_event("2013/11/2","Eid")
-
-#calendar.delete_event("2013/11/2","Eid")
-
-#calendar.print_month(2021,9)
-#calendar.print_All_MonthEvents(2013,11)
-#calendar.print_All_Day_Events(2013,11,2)
+end
